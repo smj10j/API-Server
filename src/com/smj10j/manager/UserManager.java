@@ -25,7 +25,7 @@ public abstract class UserManager {
 		
 	public static void save(User user) throws InvalidParameterException, FatalException {
 		user.save();
-		Cache.remove(user.getUserId()+"", Cache.namespace.USER_BY_ID);
+		Cache.remove(user.getId()+"", Cache.namespace.USER_BY_ID);
 	}
 	
 }

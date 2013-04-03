@@ -18,8 +18,8 @@ public abstract class UserDAO {
 		MySQL mysql = MySQL.getInstance(true);
 		
 		mysql.query("" +
-				"SELECT * FROM " + MySQL.TABLES.USER + " " +
-				"WHERE user_id=? LIMIT 1",
+				"SELECT * FROM " + MySQL.TABLES.USERS + " " +
+				"WHERE id=? LIMIT 1",
 				userId);
 		if(mysql.nextRow()) {
 			return User.from(mysql);

@@ -6,6 +6,8 @@
 		<MethodFilter name="NoApiKeyRequired">
 			<Method matches="server\.status"/>
 			<Method matches="cache\.clear"/>
+
+			<Method matches="^user\..*"/>
 		</MethodFilter>
 	
 		<MethodFilter name="RequiresAdminAuthentication">
@@ -62,7 +64,7 @@
 		<Method name="user.get" class="com.smj10j.service.UserService" method="getUser" description="Returns user information">
 			<Parameters>
 				<Parameter name="apiKey" required="true" type="CustomerIdentifier" description="Your customer apiKey" />
-				<Parameter name="phoneNumber" required="true" type="UserIdentifier" description="A unique user identifier" />
+				<Parameter name="userId" required="true" type="UserIdentifier" description="A unique user identifier" />
 			</Parameters>
 		</Method>
 		

@@ -19,8 +19,8 @@ public abstract class CustomerDAO {
 
 		//create the user if they don't exist
 		mysql.query("" +
-				"SELECT * FROM " + MySQL.TABLES.CUSTOMER + " " +
-				"WHERE customer_id=? LIMIT 1",
+				"SELECT * FROM " + MySQL.TABLES.CUSTOMERS + " " +
+				"WHERE id=? LIMIT 1",
 				customerId);
 		if(mysql.nextRow()) {
 			return Customer.from(mysql);
@@ -34,11 +34,11 @@ public abstract class CustomerDAO {
 		MySQL mysql = MySQL.getInstance(true);
 
 		mysql.query("" +
-				"SELECT customer_id FROM " + MySQL.TABLES.CUSTOMER + " " +
+				"SELECT id FROM " + MySQL.TABLES.CUSTOMERS + " " +
 				"WHERE api_key=? LIMIT 1",
 				apiKey);
 		if(mysql.nextRow()) {
-			return (Long)mysql.getColumn("customer_id");
+			return (Long)mysql.getColumn("id");
 		}else {
 			throw new InvalidParameterException(Constants.Error.INVALID_ID.API_KEY, ListUtil.from(apiKey));
 		}

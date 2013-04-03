@@ -12,8 +12,8 @@ import com.smj10j.conf.InvalidParameterException;
 import com.smj10j.dao.MySQL;
 import com.smj10j.jaxb.CustomerType;
 
-@MySQLTable(name=MySQL.TABLES.CUSTOMER, 
-		primaryKey="customerId",
+@MySQLTable(name=MySQL.TABLES.CUSTOMERS, 
+		primaryKey="id",
 		transients={
 			"someTransientExample"
 		}
@@ -28,7 +28,7 @@ public class Customer extends DatabaseBackedObject implements Serializable {
 	private String apiKey;
 	private String name;
 	private String secretKey;
-	private long customerId;
+	private long id;
 	private boolean enabled;
 	private long created;
 
@@ -40,7 +40,7 @@ public class Customer extends DatabaseBackedObject implements Serializable {
 	
 	public CustomerType toCustomerType() throws InvalidParameterException, FatalException {
 		CustomerType customerType = new CustomerType();
-		customerType.setCustomerId(getCustomerId());
+		customerType.setId(getId());
 		customerType.setApiKey(getApiKey());
 		customerType.setEnabled(isEnabled());
 		customerType.setName(getName());
@@ -77,19 +77,19 @@ public class Customer extends DatabaseBackedObject implements Serializable {
 		return enabled;
 	}
 
-	public void setCustomerId(long customerId) {
-		this.customerId = customerId;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	public long getCustomerId() {
-		return customerId;
+	public long getId() {
+		return id;
 	}
 	
 	public static Customer from(MySQL mysql) throws FatalException, InvalidParameterException {
 		
 		
 		Customer customer = new Customer();
-		customer.setCustomerId((Long)mysql.getColumn("customer_id"));
+		customer.setId((Long)mysql.getColumn("id"));
 		customer.setApiKey((String)mysql.getColumn("api_key"));
 		customer.setName((String)mysql.getColumn("name"));
 		customer.setSecretKey((String)mysql.getColumn("secret_key"));

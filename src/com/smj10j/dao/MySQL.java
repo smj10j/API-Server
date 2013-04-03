@@ -35,9 +35,9 @@ public class MySQL {
 	private static Logger logger = Logger.getLogger(MySQL.class);
 
 	public static class TABLES {
-		public static final String USER = "user";
-		public static final String CUSTOMER = "customer";
-		public static final String SERVER = "server";
+		public static final String USERS = "users";
+		public static final String CUSTOMERS = "customers";
+		public static final String SERVERS = "servers";
 	}
 
 	private enum DataSourceType {

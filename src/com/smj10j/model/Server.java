@@ -9,8 +9,8 @@ import com.smj10j.conf.InvalidParameterException;
 import com.smj10j.dao.MySQL;
 import com.smj10j.jaxb.ServerType;
 
-@MySQLTable(name=MySQL.TABLES.SERVER, 
-		primaryKey="serverId",
+@MySQLTable(name=MySQL.TABLES.SERVERS, 
+		primaryKey="id",
 		transients={}
 )
 
@@ -22,7 +22,7 @@ public class Server extends DatabaseBackedObject implements Serializable {
 		SUBSCRIBE
 	};
 	
-	private long serverId;
+	private long id;
 	private Type type;
 	private String url;
 	private int port;
@@ -36,12 +36,12 @@ public class Server extends DatabaseBackedObject implements Serializable {
 	}
 	
 	public String toString() {
-		return "Id: " + serverId;
+		return "Id: " + id;
 	}
 	
 	public ServerType toServerType() throws InvalidParameterException, FatalException {
 		ServerType serverType = new ServerType();
-		serverType.setServerId(getServerId());
+		serverType.setId(getId());
 		serverType.setType(getType().toString());
 		serverType.setUrl(getUrl());
 		serverType.setPort(getPort());
@@ -57,7 +57,7 @@ public class Server extends DatabaseBackedObject implements Serializable {
 	public static Server from(MySQL mysql) throws FatalException, InvalidParameterException {
 		
 		Server server = new Server();
-		server.setServerId((Long)mysql.getColumn("server_id"));
+		server.setId((Long)mysql.getColumn("id"));
 		server.setType(Type.valueOf((String)mysql.getColumn("type")));
 		server.setUrl((String)mysql.getColumn("url"));
 		server.setPort(((Long)mysql.getColumn("port")).intValue());
@@ -125,11 +125,11 @@ public class Server extends DatabaseBackedObject implements Serializable {
 		return protocol;
 	}
 
-	public void setServerId(long serverId) {
-		this.serverId = serverId;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	public long getServerId() {
-		return serverId;
+	public long getId() {
+		return id;
 	}
 }

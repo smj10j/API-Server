@@ -177,7 +177,7 @@
 		<copy todir="${deploy.dir.war}">
 			<fileset file="${dir.distribution}/${war.name}"/>
 		</copy>
-		<echo message="Deployed ${war.name} to ${deploy.dir}'s staging area - will be deployed to JBoss within a few seconds"/>
+		<echo message="Deployed ${war.name} to ${deploy.dir.war} - will be deployed to JBoss within a few seconds"/>
 	</target>
 	
 	<!-- ====================================== -->

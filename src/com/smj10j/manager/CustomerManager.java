@@ -44,6 +44,6 @@ public abstract class CustomerManager {
 	public static void save(Customer customer) throws FatalException, InvalidParameterException {
 		customer.save();
 		Cache.remove(customer.getApiKey(), Cache.namespace.CUSTOMER_BY_API_KEY);
-		Cache.remove(customer.getCustomerId()+"", Cache.namespace.CUSTOMER_BY_ID);
+		Cache.remove(customer.getId()+"", Cache.namespace.CUSTOMER_BY_ID);
 	}
 }

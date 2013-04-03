@@ -33,20 +33,14 @@
 	<xsd:complexType name="UserType">
 		<xsd:sequence>	
 		</xsd:sequence>	
-		<xsd:attribute name="userId" type="xsd:long"/>
-		<xsd:attribute name="deviceId" type="xsd:string"/>
-		<xsd:attribute name="remoteDeviceUUID" type="xsd:string"/>
-		<xsd:attribute name="phoneNumber" type="xsd:string"/>
-		<xsd:attribute name="name" type="xsd:string"/>
-		<xsd:attribute name="available" type="xsd:boolean"/>
-		<xsd:attribute name="mobile" type="xsd:boolean"/>
-		<xsd:attribute name="hasPIN" type="xsd:boolean"/>
+		<xsd:attribute name="id" type="xsd:long"/>
+		<xsd:attribute name="email" type="xsd:string"/>
 	</xsd:complexType>
 	
 	<xsd:complexType name="CustomerType">
 		<xsd:sequence>
 		</xsd:sequence>	
-		<xsd:attribute name="customerId" type="xsd:long"/>
+		<xsd:attribute name="id" type="xsd:long"/>
 		<xsd:attribute name="name" type="xsd:string"/>
 		<xsd:attribute name="apiKey" type="xsd:string"/>
 		<xsd:attribute name="secretKey" type="xsd:string"/>
@@ -61,7 +55,7 @@
 	</xsd:complexType>
 
 	<xsd:complexType name="ServerType">
-		<xsd:attribute name="serverId" type="xsd:long"/>
+		<xsd:attribute name="id" type="xsd:long"/>
 		<xsd:attribute name="type" type="xsd:string"/>
 		<xsd:attribute name="url" type="xsd:string"/>
 		<xsd:attribute name="port" type="xsd:int"/>

@@ -387,7 +387,7 @@ public class GatewayServlet extends HttpServlet {
 		//get the user
 		request.setUserFromRequest();
 		if(request.getUser() != null) {
-			response.get().setUserId(request.getUser().getUserId());
+			response.get().setUserId(request.getUser().getId());
 		}
 		
 		//get the customer

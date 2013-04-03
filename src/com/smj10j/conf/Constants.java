@@ -13,7 +13,8 @@ import com.smj10j.model.MethodParameter;
 
 public abstract class Constants {
 
-	public static final String HOST_TLD = "server";	//eg. google.com would be google
+	public static final String HOST_TLD = "server.com";
+	public static final String API_SERVER_BASE = "api."+HOST_TLD;
 	public static final String API_VERSION = "1";
 	public static final boolean DEBUG_MODE = false;
 	public static String SERVLET_CONTEXT_PATH = null;

@@ -101,14 +101,14 @@ public class GatewayServlet extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	public void processRequest(APIRequest apiRequest, APIResponse apiResponse, boolean newRequest) throws ServletException, IOException {
 		
-		//logger.debug("Request URL: " + request.getRequestURL());			//eg. http://api.HOST_TLD.com/warv1/api
+		//logger.debug("Request URL: " + request.getRequestURL());			//eg. http://HOST_TLD/warv1/api
 		//logger.debug("Request URI: " + request.getRequestURI());			//eg. /warv1/api
 		//logger.debug("Request QueryString: " + request.getQueryString());	//eg. method=server.status
 
 		if(StringUtil.isNullOrEmpty(SERVER_BASE_URL)) {	
 			String requestUrl = apiRequest.getRequestURL();
 			SERVER_BASE_URL = requestUrl.substring(0,requestUrl.lastIndexOf("/api")+1);
-			SERVER_BASE_URL = SERVER_BASE_URL.replace(":80", "").replace(":443", "").replace("http://", "https://");
+			SERVER_BASE_URL = SERVER_BASE_URL.replace(":8080", "").replace(":80", "").replace(":443", "").replace("http://", "https://");
 			
 			// Sets the URL that will be used when making asynchronous logging requests
 			LOCAL_SERVER_BASE_URL = SERVER_BASE_URL.replaceFirst("https://[^/]*/", "http://localhost:8080/");		
@@ -119,7 +119,7 @@ public class GatewayServlet extends HttpServlet {
 	    	}else if (SERVER_BASE_URL.contains("sandbox")) {
 				EXTERNAL_SERVER_BASE_URL = SERVER_BASE_URL;
 	    	}else {
-				EXTERNAL_SERVER_BASE_URL = SERVER_BASE_URL.replaceFirst("https://[^/]*/", "https://api."+Constants.HOST_TLD+".com/");
+				EXTERNAL_SERVER_BASE_URL = SERVER_BASE_URL.replaceFirst("https://[^/]*/", "https://"+Constants.API_SERVER_BASE+"/");
 	    	}
 			
 			//hostname is returned in requests
@@ -312,7 +312,7 @@ public class GatewayServlet extends HttpServlet {
 		    		//this is the worse-possible situation. we show the user a default error page
 		    		e.printStackTrace();
 		    		logger.error(e);
-		    		apiResponse.getHttpServletResponse().sendError(500, "We're having a bit of a problem with that request. We're working on it - please email customer support or check status."+Constants.HOST_TLD+".com for updates");
+		    		apiResponse.getHttpServletResponse().sendError(500, "We're having a bit of a problem with that request. We're working on it - please email customer support or check status."+Constants.HOST_TLD+" for updates");
 				}			
 				out.close();
 			}

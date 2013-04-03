@@ -57,6 +57,8 @@ public class User extends DatabaseBackedObject implements Serializable {
 		
 		User user = new User((Long)mysql.getColumn("user_id"));
 
+		user.takeFieldValuesSnapshot();
+		
 		return user;
 	}
 }

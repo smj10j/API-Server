@@ -36,6 +36,7 @@ public class MySQL {
 
 	public static class TABLES {
 		public static final String USER = "user";
+		public static final String CUSTOMER = "customer";
 		public static final String SERVER = "server";
 	}
 

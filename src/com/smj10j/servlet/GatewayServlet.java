@@ -374,7 +374,6 @@ public class GatewayServlet extends HttpServlet {
 		}
 		
 		//get the customer
-		/*
 		request.setCustomerFromRequest();
 		if(request.getCustomer() != null) {
 			response.get().setApiKey(request.getCustomer().getApiKey());
@@ -384,7 +383,6 @@ public class GatewayServlet extends HttpServlet {
 				throw new InvalidParameterException(Constants.Error.GATEWAY.INVALID_REQUEST_MISSING_APIKEY);
 			}
 		}
-		*/
 		
 		
 		/*
@@ -430,7 +428,7 @@ public class GatewayServlet extends HttpServlet {
 				
 			if(!signatureIsValid && !requiresAdminSignature) {
 				//try the customer secret key
-				String secretKey = null;//TODO: enable request.getCustomer().getSecretKey();
+				String secretKey = request.getCustomer().getSecretKey();
 				targetSignature = SecurityUtil.calculateSignature(dataForSignature, secretKey);
 				if(targetSignature.equals(signature)) {
 					request.setRequiresAdmin(true);

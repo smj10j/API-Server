@@ -115,6 +115,7 @@ public abstract class Constants {
 		public static final class INVALID_ID {
 			public static final int API_KEY = 400;
 			public static final int USER_ID = 401;
+			public static final int CUSTOMER_ID = 402;
 		}
 
 		public static final class GATEWAY {

@@ -4,6 +4,14 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.apache.log4j.Logger;
 import org.apache.poi.hwpf.extractor.WordExtractor;
@@ -18,13 +26,13 @@ import com.amazonaws.services.simpleemail.model.SendEmailRequest;
 import com.smj10j.conf.Constants;
 import com.smj10j.conf.FatalException;
 import com.smj10j.conf.InvalidParameterException;
+import com.smj10j.model.Customer;
 import com.smj10j.servlet.GatewayServlet;
 
 public abstract class EmailUtil {
 
 	private static Logger logger = Logger.getLogger(EmailUtil.class);
 	
-	/*
 	public static void email(String to, String from, String subject, String body) throws FatalException {
 
 		String host = "localhost";
@@ -46,7 +54,6 @@ public abstract class EmailUtil {
 			throw new FatalException(e);
 		}
 	}
-	*/
 	
 	public static String getInternalAdminEmail() {
 		String hostname = GatewayServlet.getHostname();
@@ -57,8 +64,7 @@ public abstract class EmailUtil {
 		return to;
 	}
 	
-	//public static void email(Customer customer, String sender, List<String> recipients, String subject, byte[] bytes, String fileFormat, Integer price) throws FatalException, InvalidParameterException {
-	public static void email(Object customer, String sender, List<String> recipients, String subject, byte[] bytes, String fileFormat, Integer price) throws FatalException, InvalidParameterException {
+	public static void email(Customer customer, String sender, List<String> recipients, String subject, byte[] bytes, String fileFormat, Integer price) throws FatalException, InvalidParameterException {
 		
 		final String HOST = "host.com";
 		SendEmailRequest emailRequest = new SendEmailRequest().withSource(sender + "@" + HOST);

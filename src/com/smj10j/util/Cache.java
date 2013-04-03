@@ -41,6 +41,9 @@ public abstract class Cache {
 	
 	public static class namespace {
 		public static final String USER_BY_ID = "USER_BY_ID";
+		public static final String CUSTOMER_BY_API_KEY = "CUSTOMER_BY_API_KEY";
+		public static final String CUSTOMER_API_KEY_TO_CUSTOMER_ID = "CUSTOMER_API_KEY_TO_CUSTOMER_ID";
+		public static final String CUSTOMER_BY_ID = "CUSTOMER_BY_ID";
 	}
 	
 	private static String getNamespaceKey(String...namespaces) {

@@ -23,6 +23,7 @@ import com.smj10j.conf.Constants;
 import com.smj10j.conf.FatalException;
 import com.smj10j.conf.InvalidParameterException;
 import com.smj10j.dao.MySQL;
+import com.smj10j.manager.CustomerManager;
 import com.smj10j.manager.UserManager;
 import com.smj10j.util.ArrayUtil;
 import com.smj10j.util.DateUtil;
@@ -37,6 +38,7 @@ public class APIRequest implements Serializable  {
 	private HttpServletRequest request;
 	private Map<String, String> defaultParameters = new HashMap<String, String>();
 	private String methodName;
+	private Customer customer;
 	private User user;
 	private boolean newRequest;	//if false, then the request is coming from inside the application
 	private boolean requiresAdmin;
@@ -301,6 +303,21 @@ public class APIRequest implements Serializable  {
 		}
 	}
 	
+	public void setCustomerFromRequest() throws FatalException, InvalidParameterException {
+		if(customer == null) {
+			Long customerId = getParameterLong(Constants.Request.CUSTOMER_ID, false);
+			String apiKey = getParameter(Constants.Request.API_KEY, false);
+
+			if(!StringUtil.isNullOrEmpty(apiKey) || customerId != null) {
+				if(customerId != null) {
+					this.customer = CustomerManager.getCustomer(customerId);					
+				}else {
+					this.customer = CustomerManager.getCustomer(apiKey);
+				}
+			}
+		}
+	}
+	
 	public void setMethodName(String methodName) {
 		this.methodName = methodName;
 	}
@@ -427,6 +444,14 @@ public class APIRequest implements Serializable  {
 
 	public void setSecretKey(String secretKey) {
 		this.secretKey = secretKey;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 }

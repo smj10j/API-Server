@@ -12,6 +12,7 @@
             <xsd:element name="Servers" type="ServersType" maxOccurs="1"/>
 			
 			<xsd:element name="User" type="UserType" maxOccurs="1"/>
+			<xsd:element name="Customer" type="CustomerType" maxOccurs="1"/>
 		</xsd:sequence>
 		
 		<xsd:attribute name="server" type="xsd:string"/>
@@ -40,6 +41,16 @@
 		<xsd:attribute name="available" type="xsd:boolean"/>
 		<xsd:attribute name="mobile" type="xsd:boolean"/>
 		<xsd:attribute name="hasPIN" type="xsd:boolean"/>
+	</xsd:complexType>
+	
+	<xsd:complexType name="CustomerType">
+		<xsd:sequence>
+		</xsd:sequence>	
+		<xsd:attribute name="customerId" type="xsd:long"/>
+		<xsd:attribute name="name" type="xsd:string"/>
+		<xsd:attribute name="apiKey" type="xsd:string"/>
+		<xsd:attribute name="secretKey" type="xsd:string"/>
+		<xsd:attribute name="enabled" type="xsd:boolean"/>
 	</xsd:complexType>
 	
 	

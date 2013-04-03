@@ -7,16 +7,13 @@
 			<Method matches="server\.status"/>
 			<Method matches="cache\.clear"/>
 
-			<!-- Uncommenting this allows all user.* methods to be called by anyone
-				<Method matches="^user\..*"/>
-			-->
 		</MethodFilter>
 	
 		<MethodFilter name="RequiresAdminAuthentication">
 		</MethodFilter>	
 
 		<MethodFilter name="RequiresSignature">
-			<Method matches="^user\..*"/>
+			<!--<Method matches="^user\..*"/>-->
 		</MethodFilter>	
 		
 		<MethodFilter name="RequiresAdminSignature">

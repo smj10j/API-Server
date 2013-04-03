@@ -5,11 +5,10 @@
 	<!-- Basic Project Settings -->
     <property name="app.name" value="${ant.project.name}"/>
     <property name="app.apiVersion" value="1"/><!-- remember to update this as well in Constants.java -->
-
+	
 	<!-- Path Locations -->
 	<property name="dir.src" value="src" />
 	<property name="dir.lib" value="lib" />
-	<property name="dir.lib.static" value="static-lib" />
 	<property name="dir.lib.compile" value="compile-lib" />
 	<property name="dir.tools" value="tools" />
 	<property name="dir.conf" value="conf" />
@@ -18,7 +17,7 @@
 	<property name="dir.web.inf" value="${dir.web}/WEB-INF"/>
 	<property name="dir.keys" value="keys"/>
 	<property name="dir.src-test" value="src-test" />
-
+	 	
 	<!-- JBoss deployment -->
 	<property name="dir.build" value="build" />
     <property name="dir.gen.source" value="${dir.build}/gensrc"/>	
@@ -26,19 +25,12 @@
 	<property name="dir.classes" value="${dir.build}/classes" />
 	<property name="dir.distribution" value="${dir.build}/distribution" />
 	<property name="war.name" value="${app.name}v${app.apiVersion}.war"/>
-	<property name="dir.local.deploy" value="/jboss/server/${app.name}" />
-	<property name="dir.remote.deploy" value="/usr/jboss/server/${app.name}" />
-	<property name="dir.remote.static" value="/usr/share/nginx/html" />
 
 	<!-- SQL deployment -->
 	<property name="sql.driver" value="com.mysql.jdbc.Driver"/>
 	<property name="sql.dbname" value=""/>
 	<property name="sql.user" value=""/>
 	<property name="sql.pass" value=""/>
-
-	<!-- Deployment Keys/Servers -->
-	<property name="server.production" value="myserver.com"/>
-	<property name="key.production" value="${dir.keys}/mykey.pem"/>
 	
 	
     <!--
@@ -51,10 +43,7 @@
 		<pathelement location="${dir.classes}"/>
 		<fileset dir="${dir.lib}">
 			<include name="**/*.jar"/>
-		</fileset>
-		<fileset dir="${dir.lib.static}">
-			<include name="**/*.jar"/>
-		</fileset>			
+		</fileset>	
 		<fileset dir="${dir.lib.compile}">
 			<include name="**/*.jar"/>
 		</fileset>		
@@ -151,7 +140,7 @@
 
 	
     <!-- ====================================== -->
-	<target name="war" depends="compile">
+	<target name="war" depends="clean,compile">
 		 <mkdir dir="${dir.distribution}" />
 		 
 		 <!-- copy over all WEB-INF files -->		
@@ -180,127 +169,39 @@
             <webinf dir="${dir.build.web.inf}" />
 		</war>
 	</target>   
-	
-    <!-- ====================================== -->
-	<target name='deploy-static-remote'>
 
-		<!-- Send the static assets to the remote machine -->
-		<scp todir="root@${server}:${dir.remote}/" 
-			   keyfile="${file.key}"
-			   trust="true"
-			   passphrase=" "
-		>	
-		 <!-- passphrase hack for old version of ant scp-->
-			<fileset dir="${dir.local}">
-				<exclude name="WEB-INF"/>
-				<exclude name="**/*.war*"/>
-			</fileset>
-		</scp>
-	
-	</target>	
 	
 	<!-- ====================================== -->
-	<target name="local" depends="war">
-		<ant target="deploy-war-local" />
-	
-	</target>
-	
-    <!-- ====================================== -->
-	<target name='deploy-war-local'>
-
-		<!-- Send the war to the local machine ready for deploying -->
-		<copy todir="${dir.local.deploy}/deploy/">
+	<target name="deploy-local" depends="war">
+		<property file="${dir.conf}/deploy.local.properties"/>
+		<copy todir="${deploy.dir.war}">
 			<fileset file="${dir.distribution}/${war.name}"/>
 		</copy>
-		
-		<echo message="Deployed ${war.name} to localhost - will be deployed to JBoss within 10 seconds"/>
+		<echo message="Deployed ${war.name} to ${deploy.dir}'s staging area - will be deployed to JBoss within a few seconds"/>
 	</target>
-		
+	
 	<!-- ====================================== -->
-	<target name='deploy-war-remote'>
-
+	<target name='deploy-war'>
 		<!-- Send the war to the remote machine ready for deploying -->
 		<scp file="${dir.distribution}/${war.name}"
-			   todir="root@${server}:${dir.remote.deploy}/pre-deploy/" 
-			   keyfile="${file.key}"
+			   todir="root@${deploy.server}:${deploy.dir.war}/" 
+			   keyfile="${deploy.key}"
 			   trust="true"
 			   passphrase=" "
 		/>	
-		 <!-- passphrase hack for old version of ant scp-->
-		
-		<!-- Indicate it has been sent -->
-		<scp file="${dir.conf}/ready"
-			   todir="root@${server}:${dir.remote.deploy}/pre-deploy/" 
-			   keyfile="${file.key}"
-			   trust="true"
-			   passphrase=" "
-		/>	
-		 <!-- passphrase hack for old version of ant scp-->
-		
-		<echo message="Deployed ${war.name} to ${server}'s staging area - will be deployed to JBoss within 10 seconds"/>
+		<echo message="Deployed ${war.name} to ${deploy.server}'s staging area - will be deployed to JBoss within 10 seconds"/>
 	</target>
-	
-	
-	<!-- ====================================== -->
-	<target name='deploy-lib-remote'>
-
-		<!-- Send the libs to the remote machine -->
-		<scp todir="root@${server}:${dir.remote.deploy}/lib" 
-			   keyfile="${file.key}"
-			   trust="true"
-			   passphrase=" "
-		>	
-		 <!-- passphrase hack for old version of ant scp-->
-			<fileset dir="${dir.lib.static}">
-			</fileset>
-		</scp>
-			
-		<echo message="Deployed libs to ${server}'s static-lib folder. Remember to restart the server for new libs to be registered."/>
-
-	</target>	
-     <!-- ====================================== -->
-	 
-	<target name="deploy-sql-remote">
-		<sql 
-			driver="${sql.driver}" 
-			url="jdbc:mysql://${server}/${sql.dbname}" 
-			userid="${sql.user}" 
-			password="${sql.pass}" 
-			classpathref="classpath.path">
-			<connectionProperty name="autoReconnect" value="true"/>
-			<transaction src="${dir.schema}/schema.sql"/>
-			<transaction src="${dir.schema}/${app.apiVersion}.updates.sql"/>
-			<transaction src="${dir.schema}/test-data/data.sql"/>
-		</sql>
-		<echo message="Deployed schema and test data files to ${server}"/>
-	</target>	
-	
-	
+		
     <!-- ====================================== -->    
     
     
     
 
 	<target name="deploy-prod" depends="war">
-		<ant target="deploy-static-remote" >
-			<property name="server" value="${server.production}" />
-			<property name="file.key" value="${key.production}" />
-			<property name="dir.local" value="${dir.web}" />
-			<property name="dir.remote" value="${dir.remote.static}" />
-		</ant>
-		<ant target="deploy-war-remote" >   
-			<property name="server" value="${server.production}" />
-			<property name="file.key" value="${key.production}" />
-		</ant>
+		<property file="${dir.conf}/deploy.production.properties"/>
+		<ant target="deploy-war"/>
 	</target>
 			
-	<target name="lib-prod" depends="">
-		<ant target="deploy-lib-remote" >   
-			<property name="server" value="${server.production}" />
-			<property name="file.key" value="${key.production}" />
-		</ant>
-	</target>	
-
 	<!-- ====================================== -->
 	
 	

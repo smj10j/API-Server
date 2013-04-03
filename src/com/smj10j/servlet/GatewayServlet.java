@@ -323,49 +323,66 @@ public class GatewayServlet extends HttpServlet {
 	protected void validateRequest(APIRequest request, APIResponse response) throws InvalidParameterException, FatalException {
 		
 		boolean requiresAdminAuth = false;
+		boolean requiresApiKey = true;
+		boolean requiresSignature = false;
+		boolean requiresAdminSignature = false;
+
 		Pattern pattern = null;
 		Matcher matcher = null;
-		for(String methodPatternString : Constants.Request.methodFilters.get(Constants.Request.METHOD_FILTER_REQUIRES_ADMIN_AUTHENTICATION)){
-			pattern = Pattern.compile(methodPatternString);
-			matcher = pattern.matcher(request.getMethodName());
-			requiresAdminAuth = matcher.find();
-			if(requiresAdminAuth) {
-		    	logger.debug("Method " + request.getMethodName() + " requires authentication (matched: " + methodPatternString + ")");
-				break;
+		
+		List<String> methodsRequiringAdminAuth = Constants.Request.methodFilters.get(Constants.Request.METHOD_FILTER_REQUIRES_ADMIN_AUTHENTICATION);
+		List<String> methodsRequiringNoApiKey = Constants.Request.methodFilters.get(Constants.Request.METHOD_FILTER_NO_API_REQUIRED);
+		List<String> methodsRequiringSignature = Constants.Request.methodFilters.get(Constants.Request.METHOD_FILTER_REQUIRES_SIGNATURE);
+		List<String> methodsRequiringAdminSignature = Constants.Request.methodFilters.get(Constants.Request.METHOD_FILTER_REQUIRES_ADMIN_SIGNATURE);
+		
+		if(methodsRequiringAdminAuth != null) {
+			for(String methodPatternString : methodsRequiringAdminAuth){
+				pattern = Pattern.compile(methodPatternString);
+				matcher = pattern.matcher(request.getMethodName());
+				requiresAdminAuth = matcher.find();
+				if(requiresAdminAuth) {
+			    	logger.debug("Method " + request.getMethodName() + " requires authentication (matched: " + methodPatternString + ")");
+					break;
+				}
 			}
 		}
-		boolean requiresApiKey = true;
-		for(String methodPatternString : Constants.Request.methodFilters.get(Constants.Request.METHOD_FILTER_NO_API_REQUIRED)){
-			pattern = Pattern.compile(methodPatternString);
-			matcher = pattern.matcher(request.getMethodName());
-			requiresApiKey = !matcher.find();
-			if(!requiresApiKey) {
-		    	logger.debug("Method " + request.getMethodName() + " does not require an apiKey (matched: " + methodPatternString + ")");
-				break;
-			}
-		}	
-		boolean requiresSignature = false;
-		for(String methodPatternString : Constants.Request.methodFilters.get(Constants.Request.METHOD_FILTER_REQUIRES_SIGNATURE)){
-			pattern = Pattern.compile(methodPatternString);
-			matcher = pattern.matcher(request.getMethodName());
-			requiresSignature = matcher.find();
-			
-			if(requiresSignature) {
-		    	logger.debug("Method " + request.getMethodName() + " requires a signature (matched: " + methodPatternString + ")");
-				break;
-			}
-		}	
 		
-		boolean requiresAdminSignature = false;
-		for(String methodPatternString : Constants.Request.methodFilters.get(Constants.Request.METHOD_FILTER_REQUIRES_ADMIN_SIGNATURE)){
-			pattern = Pattern.compile(methodPatternString);
-			matcher = pattern.matcher(request.getMethodName());
-			requiresAdminSignature = matcher.find();
-			if(requiresAdminSignature) {
-		    	logger.debug("Method " + request.getMethodName() + " requires an ADMIN signature (matched: " + methodPatternString + ")");
-				break;
-			}
-		}		
+		if(methodsRequiringNoApiKey != null) {
+			for(String methodPatternString : methodsRequiringNoApiKey){
+				pattern = Pattern.compile(methodPatternString);
+				matcher = pattern.matcher(request.getMethodName());
+				requiresApiKey = !matcher.find();
+				if(!requiresApiKey) {
+			    	logger.debug("Method " + request.getMethodName() + " does not require an apiKey (matched: " + methodPatternString + ")");
+					break;
+				}
+			}	
+		}
+		
+		if(methodsRequiringSignature != null) {
+			for(String methodPatternString : methodsRequiringSignature){
+				pattern = Pattern.compile(methodPatternString);
+				matcher = pattern.matcher(request.getMethodName());
+				requiresSignature = matcher.find();
+				
+				if(requiresSignature) {
+			    	logger.debug("Method " + request.getMethodName() + " requires a signature (matched: " + methodPatternString + ")");
+					break;
+				}
+			}	
+		}
+		
+		if(methodsRequiringAdminSignature != null) {
+			for(String methodPatternString : methodsRequiringAdminSignature){
+				pattern = Pattern.compile(methodPatternString);
+				matcher = pattern.matcher(request.getMethodName());
+				requiresAdminSignature = matcher.find();
+				if(requiresAdminSignature) {
+			    	logger.debug("Method " + request.getMethodName() + " requires an ADMIN signature (matched: " + methodPatternString + ")");
+					break;
+				}
+			}		
+		}
 		
 		//get the user
 		request.setUserFromRequest();

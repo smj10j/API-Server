@@ -66,6 +66,10 @@ public abstract class EmailUtil {
 	
 	public static void email(Customer customer, String sender, List<String> recipients, String subject, byte[] bytes, String fileFormat, Integer price) throws FatalException, InvalidParameterException {
 		
+		logger.warn("ADD YOUR VERIFIED AMAZON SES EMAIL TO SEND MAIL");
+		return;
+		/*
+		
 		final String HOST = "host.com";
 		SendEmailRequest emailRequest = new SendEmailRequest().withSource(sender + "@" + HOST);
 		
@@ -104,14 +108,12 @@ public abstract class EmailUtil {
 		try {
 			client.sendEmail(emailRequest);
 			logger.info("SES message sent successfully.");
-			/*if(customer != null && price != null && price > 0) {
-				StripeManager.addInvoiceItem(customer, recipients.size() * price, "email to " + recipients.size() + " recipients", "usd");
-			}*/
 		} catch (AmazonClientException e) {
 			System.out.println(e.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		*/
 	}
 	
 	public static Body convertHtml(byte[] bytes) {

@@ -7,7 +7,9 @@
 			<Method matches="server\.status"/>
 			<Method matches="cache\.clear"/>
 
-			<Method matches="^user\..*"/>
+			<!-- Uncommenting this allows all user.* methods to be called by anyone
+				<Method matches="^user\..*"/>
+			-->
 		</MethodFilter>
 	
 		<MethodFilter name="RequiresAdminAuthentication">

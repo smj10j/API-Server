@@ -1,0 +1,7 @@
+Generic API Server
+
+To compile JAXB
+	ant jaxb
+
+To build a WAR
+	ant war

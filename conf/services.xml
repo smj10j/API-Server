@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApiMethods>
+
+	<MethodFilters>
+	
+		<MethodFilter name="NoApiKeyRequired">
+			<Method matches="server\.status"/>
+			<Method matches="cache\.clear"/>
+		</MethodFilter>
+	
+		<MethodFilter name="RequiresAdminAuthentication">
+		</MethodFilter>	
+
+		<MethodFilter name="RequiresSignature">
+			<Method matches="^user\..*"/>
+		</MethodFilter>	
+		
+		<MethodFilter name="RequiresAdminSignature">
+			<Method matches="cache\.clear"/>
+		</MethodFilter>			
+		
+	</MethodFilters>
+	
+	
+	
+	
+	
+	<PrivateMethods>
+	
+		<Method name="cache.clear" class="com.smj10j.service.ServerService" method="cacheClear" description="Clears the server's cache">
+			<Parameters>
+			</Parameters>
+		</Method>		
+		
+	</PrivateMethods>
+
+	
+	
+	
+	
+	<PublicMethods>
+	
+		<Method name="server.status" class="com.smj10j.service.ServerService" method="getStatus" description="Determines if the API is available">
+			<Parameters>
+			</Parameters>
+		</Method>	
+		
+		<Method name="server.getErrorCodes" class="com.smj10j.service.ServerService" method="getErrorCodes" description="Returns the list of error codes used">
+			<Parameters>
+			</Parameters>
+		</Method>			
+		
+		<Method name="server.getMethods" class="com.smj10j.service.ServerService" method="getMethods" description="Gets the list of available API methods">
+			<Parameters>
+			</Parameters>
+		</Method>
+		
+		
+		
+		
+		
+		<Method name="user.get" class="com.smj10j.service.UserService" method="getUser" description="Returns user information">
+			<Parameters>
+				<Parameter name="apiKey" required="true" type="CustomerIdentifier" description="Your customer apiKey" />
+				<Parameter name="phoneNumber" required="true" type="UserIdentifier" description="A unique user identifier" />
+			</Parameters>
+		</Method>
+		
+	</PublicMethods>
+	
+</ApiMethods>
+

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jxb="http://java.sun.com/xml/ns/jaxb" jxb:version="2.0">
+
+	<xsd:element name="Response" type="ResponseType"/>
+	
+	<xsd:complexType name="ResponseType">
+		<xsd:sequence>
+			<xsd:element name="Error" type="ErrorType" maxOccurs="1"/>
+			<xsd:element name="ErrorCodes" type="ErrorCodesType" maxOccurs="1"/>
+			<xsd:element name="ApiMethods" type="ApiMethodsType" maxOccurs="1"/>
+			<xsd:element name="ApiMethodFilters" type="ApiMethodFiltersType" maxOccurs="1"/>
+            <xsd:element name="Servers" type="ServersType" maxOccurs="1"/>
+			
+			<xsd:element name="User" type="UserType" maxOccurs="1"/>
+		</xsd:sequence>
+		
+		<xsd:attribute name="server" type="xsd:string"/>
+		<xsd:attribute name="status" type="xsd:string"/>
+		<xsd:attribute name="asyncToken" type="xsd:string"/>
+		<xsd:attribute name="timestamp" type="xsd:long"/>
+		<xsd:attribute name="elapsed" type="xsd:int"/>
+		<xsd:attribute name="message" type="xsd:string"/>
+		<xsd:attribute name="method" type="xsd:string"/>
+		<xsd:attribute name="apiKey" type="xsd:string"/>
+		<xsd:attribute name="userId" type="xsd:long"/>
+		<xsd:attribute name="oauthUri" type="xsd:string"/>
+		
+	</xsd:complexType>
+	
+
+	
+	<xsd:complexType name="UserType">
+		<xsd:sequence>	
+		</xsd:sequence>	
+		<xsd:attribute name="userId" type="xsd:long"/>
+		<xsd:attribute name="deviceId" type="xsd:string"/>
+		<xsd:attribute name="remoteDeviceUUID" type="xsd:string"/>
+		<xsd:attribute name="phoneNumber" type="xsd:string"/>
+		<xsd:attribute name="name" type="xsd:string"/>
+		<xsd:attribute name="available" type="xsd:boolean"/>
+		<xsd:attribute name="mobile" type="xsd:boolean"/>
+		<xsd:attribute name="hasPIN" type="xsd:boolean"/>
+	</xsd:complexType>
+	
+	
+	<xsd:complexType name="ServersType">
+		<xsd:sequence>
+			<xsd:element name="Server" type="ServerType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ServerType">
+		<xsd:attribute name="serverId" type="xsd:long"/>
+		<xsd:attribute name="type" type="xsd:string"/>
+		<xsd:attribute name="url" type="xsd:string"/>
+		<xsd:attribute name="port" type="xsd:int"/>
+		<xsd:attribute name="protocol" type="xsd:string"/>
+		<xsd:attribute name="resource" type="xsd:string"/>
+		<xsd:attribute name="subscriberCount" type="xsd:long"/>
+		<xsd:attribute name="created" type="xsd:long"/>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ApiMethodParametersType">
+		<xsd:sequence>
+			<xsd:element name="ApiMethodParameter" type="ApiMethodParameterType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>		
+	
+	<xsd:complexType name="ApiMethodParameterType">	
+		<xsd:attribute name="name" type="xsd:string"/>
+		<xsd:attribute name="required" type="xsd:boolean"/>
+		<xsd:attribute name="type" type="xsd:string"/>
+		<xsd:attribute name="default" type="xsd:string"/>
+		<xsd:attribute name="description" type="xsd:string"/>
+	</xsd:complexType>	
+	
+	<xsd:complexType name="ApiMethodsType">
+		<xsd:sequence>
+			<xsd:element name="ApiMethod" type="ApiMethodType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>		
+	
+	<xsd:complexType name="ApiMethodType">	
+		<xsd:sequence>
+			<xsd:element name="ApiMethodParameters" type="ApiMethodParametersType" maxOccurs="1"/>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string"/>
+		<xsd:attribute name="description" type="xsd:string"/>
+	</xsd:complexType>	
+	
+	<xsd:complexType name="ApiMethodFiltersType">
+		<xsd:sequence>
+			<xsd:element name="ApiMethodFilter" type="ApiMethodFilterType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>		
+	
+	<xsd:complexType name="ApiMethodFilterType">	
+		<xsd:attribute name="name" type="xsd:string"/>
+		<xsd:attribute name="matches" type="xsd:string"/>
+	</xsd:complexType>
+		
+	<xsd:complexType name="ErrorType">
+		<xsd:attribute name="message" type="xsd:string"/>
+		<xsd:attribute name="code" type="xsd:int"/>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ErrorCodesType">
+		<xsd:sequence>
+			<xsd:element name="ErrorCode" type="ErrorCodeType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>		
+	
+	<xsd:complexType name="ErrorCodeType">	
+		<xsd:attribute name="name" type="xsd:string"/>
+		<xsd:attribute name="code" type="xsd:int"/>
+		<xsd:attribute name="message" type="xsd:string"/>
+	</xsd:complexType>	
+	
+</xsd:schema>

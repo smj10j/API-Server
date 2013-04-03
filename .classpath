@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="src-test"/>
+	<classpathentry kind="src" path="build/gensrc"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
+	<classpathentry exported="true" kind="lib" path="lib/json.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry exported="true" kind="lib" path="compile-lib/jaxb/jaxb-ri-20091104/lib/jaxb-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="compile-lib/jaxb/jaxb-ri-20091104/lib/jaxb-impl.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/memcached-2.5rc3.jar"/>
+	<classpathentry exported="true" kind="lib" path="compile-lib/junit/commons-logging-1.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="compile-lib/junit/junit-4.8.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="compile-lib/junit/commons-codec-1.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-httpclient-3.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="static-lib/commons-logging-1.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="static-lib/httpclient-4.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="static-lib/httpcore-4.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="static-lib/jersey-core-1.8.jar"/>
+	<classpathentry exported="true" kind="lib" path="static-lib/jettison-1.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="static-lib/mysql-connector-java-5.1.13-bin.jar"/>
+	<classpathentry exported="true" kind="lib" path="static-lib/scribe-1.2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="static-lib/xstream-1.3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="compile-lib/log4j-1.2.15.jar"/>
+	<classpathentry exported="true" kind="lib" path="compile-lib/mail.jar"/>
+	<classpathentry exported="true" kind="lib" path="compile-lib/servlet-api-2.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jsslutils-extra-apachehttpclient3-1.0.5.jar"/>
+	<classpathentry kind="lib" path="static-lib/jempbox-1.7.0.jar"/>
+	<classpathentry kind="lib" path="static-lib/poi-3.8-20120326.jar"/>
+	<classpathentry kind="lib" path="static-lib/poi-scratchpad-3.8-20120326.jar"/>
+	<classpathentry kind="lib" path="static-lib/aws-java-sdk-1.3.10-javadoc.jar"/>
+	<classpathentry kind="lib" path="static-lib/aws-java-sdk-1.3.10-sources.jar"/>
+	<classpathentry kind="lib" path="static-lib/aws-java-sdk-1.3.10.jar"/>
+	<classpathentry kind="lib" path="static-lib/aws-java-sdk-flow-build-tools-1.3.10.jar"/>
+	<classpathentry kind="lib" path="static-lib/gson-2.2.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="static-lib/gson-2.2.1-sources.jar"/>
+	<classpathentry kind="lib" path="static-lib/gson-2.2.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
